@@ -1,5 +1,6 @@
 
 import 'package:jajungjin/screen/auth/auth_screen.dart';
+import 'package:jajungjin/screen/pages/i_am_port_payment_screen.dart';
 import 'package:jajungjin/screen/splash_screen.dart';
 import 'package:jajungjin/screen/tab_screen.dart';
 import 'package:provider/provider.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           ),
           routes: {
             AuthScreen.routeName:(ctx) => AuthScreen(),
+               IamportPaymentScreen.routeName:(ctx) =>  IamportPaymentScreen(),
             // PlaceDetailScreen.routeName: (ctx) => PlaceDetailScreen(),
             // ChatScreen.routeName: (ctx) => ChatScreen(),
             // ChannelAddScreen.routeName: (ctx) => ChannelAddScreen(),
