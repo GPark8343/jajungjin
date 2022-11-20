@@ -78,7 +78,8 @@ class ItemDetailScreen extends StatelessWidget {
                 });
               },
             )
-          ]))
+          ])
+          )
         ],
       ),
     );
