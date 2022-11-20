@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jajungjin/screen/pages/pay_screen.dart';
+import 'package:jajungjin/screen/pages/plus_item_screen.dart';
 import 'package:jajungjin/screen/pages/third_screen.dart';
-import 'package:jajungjin/screen/pages/two_screen.dart';
+import 'package:jajungjin/screen/pages/list_screen.dart';
 import 'package:jajungjin/widgets/app_drawer.dart';
 
 class TapScreen extends StatefulWidget {
@@ -19,8 +20,8 @@ class _TapScreenState extends State<TapScreen> {
   @override
   void initState() {
     _pages = [
-      {'page': PayScreen(), 'title': 'List'},
-      {'page': TwoScreen(), 'title': 'Map'},
+
+      {'page': ListScreen(), 'title': 'List'},
       {'page': ThreeScreen(), 'title': 'Chat'},
       // {'page': FilterScreen(), 'title': 'Filter'},
       // {'page': UserFreindScreen(), 'title': 'Friend'},
@@ -43,9 +44,18 @@ class _TapScreenState extends State<TapScreen> {
       drawer: AppDrawer(),
       appBar: AppBar(
           title: Text(_pages[_selectedPageIndex]['title'] as String),
-          actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart)),
-          ]),
+          actions: _selectedPageIndex == 1
+              ? [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(PlusItemScreen.routeName);
+                      },
+                      icon: Icon(Icons.add)),
+                ]
+              : [
+                  IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart)),
+                ]),
       body: _pages[_selectedPageIndex]['page'] as Widget,
       bottomNavigationBar: BottomNavigationBar(
           onTap: _selectPage,
@@ -55,14 +65,11 @@ class _TapScreenState extends State<TapScreen> {
           currentIndex: _selectedPageIndex,
           type: BottomNavigationBarType.fixed,
           items: [
+        
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
-                icon: Icon(Icons.chat),
-                label: 'chat'),
-            BottomNavigationBarItem(
-                backgroundColor: Theme.of(context).primaryColor,
-                icon: Icon(Icons.people),
-                label: 'friend'),
+                icon: Icon(Icons.list),
+                label: 'List'),
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
                 icon: Icon(Icons.people_alt_rounded),

@@ -11,6 +11,12 @@ class IamportPaymentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final price =
+        (ModalRoute.of(context)?.settings.arguments as Map)['price'] as num;
+          final productId =
+        (ModalRoute.of(context)?.settings.arguments as Map)['productId'] as String;
+          final foodName =
+        (ModalRoute.of(context)?.settings.arguments as Map)['foodName'] as String;
     return IamportPayment(
       appBar: new AppBar(
         title: new Text('아임포트 결제'),
@@ -34,9 +40,9 @@ class IamportPaymentScreen extends StatelessWidget {
       data: PaymentData(
           pg: 'html5_inicis', // PG사
           payMethod: 'card', // 결제수단
-          name: '아임포트 결제데이터 분석', // 주문명
-          merchantUid: 'mid_${DateTime.now().millisecondsSinceEpoch}', // 주문번호
-          amount: 100, // 결제금액
+          name: foodName, // 주문명
+          merchantUid: productId, // 주문번호
+          amount: price, // 결제금액
           buyerName: '홍길동', // 구매자 이름
           buyerTel: '01012345678', // 구매자 연락처
           buyerEmail: 'example@naver.com', // 구매자 이메일
@@ -46,6 +52,7 @@ class IamportPaymentScreen extends StatelessWidget {
           ),
       /* [필수입력] 콜백 함수 */
       callback: (Map<String, String> result) {
+        Navigator.of(context).pop();
         Navigator.of(context).pop();
       },
     );
