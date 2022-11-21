@@ -61,16 +61,17 @@ class IamportPaymentScreen extends StatelessWidget {
       /* [필수입력] 콜백 함수 */
       callback: (Map<String, String> result) async {
         await FirebaseFirestore.instance //메시지 생성
-            .collection('users')
-            .doc(FirebaseAuth.instance.currentUser?.uid)
-            .collection('receipt')
-            .add({
+            .collection('receipts')
+            .doc(merchantUid)
+            .set({
           'foodName': foodName,
           'createdAt': Timestamp.now(),
           'price': price,
           'selectedAmount': selectedAmount,
           'productId': productId,
-          'merchantUid':merchantUid
+          'merchantUid': merchantUid,
+          'currentUserUid': FirebaseAuth.instance.currentUser?.uid,
+          'complete': false
         });
         await FirebaseFirestore.instance //메시지 생성
             .collection('items')
