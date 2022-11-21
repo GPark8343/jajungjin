@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jajungjin/screen/pages/pay_screen.dart';
 import 'package:jajungjin/screen/pages/plus_item_screen.dart';
-import 'package:jajungjin/screen/pages/third_screen.dart';
+import 'package:jajungjin/screen/pages/profile_screen.dart';
+import 'package:jajungjin/screen/pages/receipt_screen.dart';
 import 'package:jajungjin/screen/pages/list_screen.dart';
 import 'package:jajungjin/widgets/app_drawer.dart';
 
@@ -24,7 +25,8 @@ class _TapScreenState extends State<TapScreen> {
   void initState() {
     _pages = [
       {'page': ListScreen(), 'title': 'List'},
-      {'page': ThreeScreen(), 'title': isManager?'profile':'난 관리자'},
+      {'page': ProfileScreen(), 'title': 'profile'},
+      {'page': ReceiptScreen(), 'title': isManager?'profile':'난 관리자'},
       // {'page': FilterScreen(), 'title': 'Filter'},
       // {'page': UserFreindScreen(), 'title': 'Friend'},
       // {'page': UserListScreen(), 'title': 'People'},
@@ -55,9 +57,10 @@ class _TapScreenState extends State<TapScreen> {
                       },
                       icon: Icon(Icons.add)),
                 ])
-              : [
+              :( _selectedPageIndex == 2
+              ?[]: [
                   IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart)),
-                ]),
+                ])),
       body: _pages[_selectedPageIndex]['page'] as Widget,
       bottomNavigationBar: BottomNavigationBar(
           onTap: _selectPage,
@@ -74,7 +77,11 @@ class _TapScreenState extends State<TapScreen> {
             BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
                 icon: Icon(Icons.people_alt_rounded),
-                label: 'people'),
+                label: 'profile'),
+                    BottomNavigationBarItem(
+                backgroundColor: Theme.of(context).primaryColor,
+                icon: Icon(Icons.price_change),
+                label: 'receipt'),
           ]),
     );
   }

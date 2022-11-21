@@ -26,9 +26,9 @@ class ListScreen extends StatelessWidget {
           child: ListView.builder(
             itemCount: docs?.length,
             itemBuilder: (context, index) {
-              print(docs?[index]['image_url'].toString());
+           
               return Item(docs?[index]['foodName'], docs?[index]['description'],
-                  docs?[index]['image_url'], docs?[index]['price'], docs?[index]['createdAt'], docs?[index]['productId']);
+                  docs?[index]['image_url'], docs?[index]['price'], docs?[index]['createdAt'], docs?[index]['productId'],docs?[index]['amount']);
             },
           ),
         );

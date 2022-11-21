@@ -23,33 +23,37 @@ class _PlusItemScreenState extends State<PlusItemScreen> {
   File? _userImageFile;
 
   var _price = '';
+  var _amount = '';
 
   void _pickedImage(File image) {
     _userImageFile = image;
   }
 
-  Future<void> sendData(foodName, description, price, userImageFile) async {
+  Future<void> sendData(foodName, description, price, userImageFile,amount) async {
     try {
+      print('error');
       final currenUserUid = FirebaseAuth.instance.currentUser?.uid;
       final ref = FirebaseStorage.instance
           .ref()
           .child('foodName')
           .child('${Timestamp.now()}.jpg');
-
+      print('error');
       await ref.putFile(userImageFile!);
-
+      print('error');
       final url = await ref.getDownloadURL();
-       final productId = Uuid().v1();
+      final productId = Uuid().v1();
       await FirebaseFirestore.instance //메시지 생성
-          .collection('items')
-          .add({
+          .collection('items').doc(productId)
+          .set({
         'foodName': foodName,
         'createdAt': Timestamp.now(),
         'description': description,
         'price': int.parse(price),
         'image_url': url,
-        'productId': productId
+        'productId': productId,
+        'amount': int.parse(amount)
       });
+      print('error');
     } catch (error) {
       print(error);
     }
@@ -68,7 +72,7 @@ class _PlusItemScreenState extends State<PlusItemScreen> {
     if (isValid!) {
       _formKey.currentState?.save();
       sendData(
-          _foodName.trim(), _description.trim(), _price.trim(), _userImageFile);
+          _foodName.trim(), _description.trim(), _price.trim(), _userImageFile,_amount);
     }
   }
 
@@ -79,7 +83,10 @@ class _PlusItemScreenState extends State<PlusItemScreen> {
         IconButton(
             onPressed: () {
               _trySubmit();
-              Navigator.of(context).pop();
+              var isValid = _formKey.currentState?.validate();
+              if (isValid!) {
+                Navigator.of(context).pop();
+              }
             },
             icon: Icon(Icons.add))
       ]),
@@ -151,6 +158,26 @@ class _PlusItemScreenState extends State<PlusItemScreen> {
                       ),
                       SizedBox(
                         height: 12,
+                      ),
+                         TextFormField(
+                        key: ValueKey('amount'),
+                        autocorrect: false,
+                        textCapitalization: TextCapitalization.none,
+                        enableSuggestions: false,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                        ],
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter a valid amount.';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(labelText: 'amount'),
+                        onSaved: (value) {
+                          _amount = value.toString();
+                        },
                       ),
                     ],
                   )),

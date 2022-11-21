@@ -10,9 +10,10 @@ class Item extends StatelessWidget {
   final String description;
   final Timestamp createdAt;
   final String productId;
+  final amount;
 
   const Item(this.foodName, this.description, this.imageUrl, this.price,
-      this.createdAt,this.productId);
+      this.createdAt, this.productId, this.amount);
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +23,13 @@ class Item extends StatelessWidget {
           onTap: () async {
             await Navigator.of(context)
                 .pushNamed(ItemDetailScreen.routeName, arguments: {
-      'productId':productId,
-      'foodName':foodName,
-      'description':description,
-      'price':price,
-      'createdAt':createdAt,
-      'image_url':imageUrl,
-    
+              'productId': productId,
+              'foodName': foodName,
+              'description': description,
+              'price': price,
+              'createdAt': createdAt,
+              'image_url': imageUrl,
+              'amount': amount,
             });
           },
           child: Padding(
@@ -54,7 +55,7 @@ class Item extends StatelessWidget {
                 radius: 30,
               ),
               trailing: Text(
-                DateFormat.Hm().format((createdAt).toDate()),
+             '${amount}개 남음 ${DateFormat.Hm().format((createdAt).toDate())}',
                 style: const TextStyle(
                   color: Colors.grey,
                   fontSize: 13,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class ThreeScreen extends StatelessWidget {
-  const ThreeScreen({super.key});
-  static const routeName = '/third';
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+  static const routeName = '/receipt';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

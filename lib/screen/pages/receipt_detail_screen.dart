@@ -1,63 +1,48 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:jajungjin/providers/cancel.dart';
 import 'package:jajungjin/screen/pages/i_am_port_payment_screen.dart';
 import 'package:provider/provider.dart';
 
-class ItemDetailScreen extends StatelessWidget {
+class ReceiptDetailScreen extends StatelessWidget {
   // final String title;
   // final double price;
 
   // ProductDetailScreen(this.title,this.price);
-  static const routeName = '/item-detail';
+  static const routeName = '/receipt-detail';
   @override
   Widget build(BuildContext context) {
     final productId =
         (ModalRoute.of(context)?.settings.arguments as Map)['productId'];
     final foodName = (ModalRoute.of(context)?.settings.arguments
         as Map)['foodName'] as String;
-    final description = (ModalRoute.of(context)?.settings.arguments
-        as Map)['description'] as String;
     final price =
         (ModalRoute.of(context)?.settings.arguments as Map)['price'] as num;
+    final selectedAmount = (ModalRoute.of(context)?.settings.arguments
+        as Map)['selectedAmount'] as num;
     final createdAt = (ModalRoute.of(context)?.settings.arguments
         as Map)['createdAt'] as Timestamp;
-    final imageUrl = (ModalRoute.of(context)?.settings.arguments
-        as Map)['image_url'] as String;
-    final amount =
-        (ModalRoute.of(context)?.settings.arguments as Map)['amount'] as num;
+    var total = price * selectedAmount;
+        final merchantUid = (ModalRoute.of(context)?.settings.arguments
+        as Map)['merchantUid'] as String;
     // ...
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            expandedHeight: 300,
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(foodName),
-              background: Hero(
-                tag: productId,
-                child: Image.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-          SliverList(
-              delegate: SliverChildListDelegate([
+        appBar: AppBar(title: Text('결제 영수증')),
+        body: Column(
+          children: [
             SizedBox(
               height: 10,
             ),
             Text(
-              '${price}won',
-              style: TextStyle(color: Colors.grey, fontSize: 20),
+              '${foodName}',
+              style: TextStyle(color: Colors.black, fontSize: 20),
               textAlign: TextAlign.center,
             ),
             SizedBox(
               height: 10,
             ),
             Text(
-              '${amount}개',
+              '${total}won',
               style: TextStyle(color: Colors.grey, fontSize: 20),
               textAlign: TextAlign.center,
             ),
@@ -68,30 +53,20 @@ class ItemDetailScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 10),
               width: double.infinity,
               child: Text(
-                description,
+                '    description',
                 textAlign: TextAlign.center,
                 softWrap: true,
               ),
             ),
-            SizedBox(
-              height: 800,
-            ),
             ElevatedButton(
-              child: Text('결제 고'),
+              child: Text('환불 고'),
               onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(IamportPaymentScreen.routeName, arguments: {
-                  'productId': productId,
-                  'foodName': foodName,
-                  'price': price,
-                  'selectedAmount': 3,
-                  'amount': amount
-                });
+                Navigator.of(context).pop();
+                final cancel = Provider.of<Cancel>(context, listen: false);
+                cancel.reFund(merchantUid,productId,total);
               },
             )
-          ]))
-        ],
-      ),
-    );
+          ],
+        ));
   }
 }
