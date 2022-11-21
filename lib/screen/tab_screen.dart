@@ -27,7 +27,7 @@ class _TapScreenState extends State<TapScreen> {
     _pages = [
       {'page': ListScreen(), 'title': 'List'},
       {'page': ProfileScreen(), 'title': 'profile'},
-      {'page': ReceiptScreen(), 'title': isManager ? 'profile' : '난 관리자'},
+      {'page': ReceiptScreen(), 'title': 'receipt'},
       // {'page': FilterScreen(), 'title': 'Filter'},
       // {'page': UserFreindScreen(), 'title': 'Friend'},
       // {'page': UserListScreen(), 'title': 'People'},
