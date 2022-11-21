@@ -19,14 +19,15 @@ class _TapScreenState extends State<TapScreen> {
   late List<Map<String, Object>> _pages; //
   int _selectedPageIndex = 1;
 
-  bool isManager = FirebaseAuth.instance.currentUser?.uid!='MLZicFwQROVuFd36qz7dc59EiBm2';
- 
+  bool isManager =
+      FirebaseAuth.instance.currentUser?.uid == 'MLZicFwQROVuFd36qz7dc59EiBm2';
+
   @override
   void initState() {
     _pages = [
       {'page': ListScreen(), 'title': 'List'},
       {'page': ProfileScreen(), 'title': 'profile'},
-      {'page': ReceiptScreen(), 'title': isManager?'profile':'난 관리자'},
+      {'page': ReceiptScreen(), 'title': isManager ? 'profile' : '난 관리자'},
       // {'page': FilterScreen(), 'title': 'Filter'},
       // {'page': UserFreindScreen(), 'title': 'Friend'},
       // {'page': UserListScreen(), 'title': 'People'},
@@ -49,18 +50,23 @@ class _TapScreenState extends State<TapScreen> {
       appBar: AppBar(
           title: Text(_pages[_selectedPageIndex]['title'] as String),
           actions: _selectedPageIndex == 1
-              ? (isManager? []:[
-                  IconButton(
-                      onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed(PlusItemScreen.routeName);
-                      },
-                      icon: Icon(Icons.add)),
-                ])
-              :( _selectedPageIndex == 2
-              ?[]: [
-                  IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart)),
-                ])),
+              ? (isManager
+                  ?
+                   [
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed(PlusItemScreen.routeName);
+                          },
+                          icon: Icon(Icons.add)),
+                      
+                    ]: [])
+              : (_selectedPageIndex == 2
+                  ? []
+                  : [
+                      IconButton(
+                          onPressed: () {}, icon: Icon(Icons.shopping_cart)),
+                    ])),
       body: _pages[_selectedPageIndex]['page'] as Widget,
       bottomNavigationBar: BottomNavigationBar(
           onTap: _selectPage,
@@ -78,7 +84,7 @@ class _TapScreenState extends State<TapScreen> {
                 backgroundColor: Theme.of(context).primaryColor,
                 icon: Icon(Icons.people_alt_rounded),
                 label: 'profile'),
-                    BottomNavigationBarItem(
+            BottomNavigationBarItem(
                 backgroundColor: Theme.of(context).primaryColor,
                 icon: Icon(Icons.price_change),
                 label: 'receipt'),
