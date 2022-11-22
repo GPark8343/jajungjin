@@ -28,6 +28,8 @@ class ReceiptDetailScreen extends StatelessWidget {
         as Map)['merchantUid'] as String;
     final complete =
         (ModalRoute.of(context)?.settings.arguments as Map)['complete'] as bool;
+    final refund =
+        (ModalRoute.of(context)?.settings.arguments as Map)['refund'] as bool;
     bool isManager = FirebaseAuth.instance.currentUser?.uid ==
         'MLZicFwQROVuFd36qz7dc59EiBm2';
     // ...
@@ -78,7 +80,7 @@ class ReceiptDetailScreen extends StatelessWidget {
                 softWrap: true,
               ),
             ),
-            complete
+            (complete || refund)
                 ? Container()
                 : ElevatedButton(
                     child: Text('환불 고'),
@@ -100,6 +102,11 @@ class ReceiptDetailScreen extends StatelessWidget {
                           'amount': value.data()?['amount'] + selectedAmount
                         });
                       });
+
+                      await FirebaseFirestore.instance //메시지 생성
+                          .collection('receipts')
+                          .doc(merchantUid)
+                          .update({'refund': true});
                     },
                   )
           ],

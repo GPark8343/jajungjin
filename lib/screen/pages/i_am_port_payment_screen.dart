@@ -71,7 +71,8 @@ class IamportPaymentScreen extends StatelessWidget {
           'productId': productId,
           'merchantUid': merchantUid,
           'currentUserUid': FirebaseAuth.instance.currentUser?.uid,
-          'complete': false
+          'complete': false,
+          'refund':false
         });
         await FirebaseFirestore.instance //메시지 생성
             .collection('items')
