@@ -58,7 +58,7 @@ class _AuthFormState extends State<AuthForm> {
                 key: _formKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
+                  children: [Text('공유 냉장고 앱'),
                     if (!_isLogin) UserImagePicker(_pickedImage),
                     TextFormField(
                       key: ValueKey('email'),

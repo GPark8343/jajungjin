@@ -11,35 +11,11 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: [
           AppBar(
-            title: Text('Hello Friend'),
+            title: Text('Log out'),
             automaticallyImplyLeading: false,
           ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.shop),
-            title: Text('Shop'),
-            onTap: () {
-              // Navigator.of(context).pushReplacementNamed('/');
-            },
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.payment),
-            title: Text('Orders'),
-            onTap: () {
-              // Navigator.of(context).pushReplacementNamed('/');
-              // Navigator.of(context).pushReplacement(
-              //     CustomRoute(builder: (ctx) => OrdersScreen()));
-            },
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('Manage Products'),
-            onTap: () {
-              // Navigator.of(context).pushReplacementNamed('/');
-            },
-          ),
+        
+         
           Divider(),
           ListTile(
             leading: Icon(Icons.exit_to_app),

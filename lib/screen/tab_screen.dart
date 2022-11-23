@@ -88,7 +88,7 @@ class _TapScreenState extends State<TapScreen> {
                   BottomNavigationBarItem(
                       backgroundColor: Theme.of(context).primaryColor,
                       icon: Icon(Icons.people_alt_rounded),
-                      label: 'profile'),
+                      label: 'all receipt'),
                   BottomNavigationBarItem(
                       backgroundColor: Theme.of(context).primaryColor,
                       icon: Icon(Icons.price_change),
