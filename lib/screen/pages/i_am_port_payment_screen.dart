@@ -24,6 +24,8 @@ class IamportPaymentScreen extends StatelessWidget {
         as Map)['selectedAmount'] as num;
     final amount =
         (ModalRoute.of(context)?.settings.arguments as Map)['amount'] as num;
+    final username = (ModalRoute.of(context)?.settings.arguments
+        as Map)['username'] as String;
     var merchantUid = Uuid().v1();
     return IamportPayment(
       appBar: new AppBar(
@@ -51,7 +53,7 @@ class IamportPaymentScreen extends StatelessWidget {
           name: foodName, // 주문명
           merchantUid: merchantUid, // 주문번호
           amount: price * selectedAmount, // 결제금액
-          buyerName: '홍길동', // 구매자 이름
+          buyerName: username, // 구매자 이름
           buyerTel: '01012345678', // 구매자 연락처
           buyerEmail: 'example@naver.com', // 구매자 이메일
 
@@ -72,12 +74,14 @@ class IamportPaymentScreen extends StatelessWidget {
           'merchantUid': merchantUid,
           'currentUserUid': FirebaseAuth.instance.currentUser?.uid,
           'complete': false,
-          'refund':false
+          'refund': false,
+          'username': username
         });
         await FirebaseFirestore.instance //메시지 생성
             .collection('items')
             .doc(productId)
             .update({'amount': amount - selectedAmount});
+
         Navigator.of(context).pop();
         Navigator.of(context).pop();
       },

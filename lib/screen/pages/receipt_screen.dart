@@ -44,7 +44,8 @@ class ReceiptScreen extends StatelessWidget {
                         'selectedAmount': docs?[index]['selectedAmount'],
                         'merchantUid': docs?[index]['merchantUid'],
                         'complete': docs?[index]['complete'],
-                        'refund': docs?[index]['refund']
+                        'refund': docs?[index]['refund'],
+                        'username': docs?[index]['username']
                       });
                     },
                     child: Padding(
@@ -64,13 +65,15 @@ class ReceiptScreen extends StatelessWidget {
                           ),
                         ),
                         trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                          Text(
-                                        docs?[index]['refund']
-                                            ? '환불 완료 ${DateFormat.Hm().format((docs?[index]['createdAt']).toDate())}'
-                                            : (docs?[index]['complete']
-                                                ? '완료 ${DateFormat.Hm().format((docs?[index]['createdAt']).toDate())}'
-                                                : '미완료 ${DateFormat.Hm().format((docs?[index]['createdAt']).toDate())}'),
+                            Text('${docs?[index]['username']}'),
+                            Text(
+                              docs?[index]['refund']
+                                  ? '환불 완료 ${DateFormat.Hm().format((docs?[index]['createdAt']).toDate())}'
+                                  : (docs?[index]['complete']
+                                      ? '완료 ${DateFormat.Hm().format((docs?[index]['createdAt']).toDate())}'
+                                      : '미완료 ${DateFormat.Hm().format((docs?[index]['createdAt']).toDate())}'),
                               style: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 13,

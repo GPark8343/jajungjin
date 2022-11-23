@@ -30,6 +30,8 @@ class ReceiptDetailScreen extends StatelessWidget {
         (ModalRoute.of(context)?.settings.arguments as Map)['complete'] as bool;
     final refund =
         (ModalRoute.of(context)?.settings.arguments as Map)['refund'] as bool;
+    final username = (ModalRoute.of(context)?.settings.arguments
+        as Map)['username'] as String;
     bool isManager = FirebaseAuth.instance.currentUser?.uid ==
         'MLZicFwQROVuFd36qz7dc59EiBm2';
     // ...
@@ -46,7 +48,7 @@ class ReceiptDetailScreen extends StatelessWidget {
                             .update({'complete': true});
                         Navigator.of(context).pop();
                       },
-                      icon: Icon(Icons.check))
+                      icon: Icon(Icons.check)),
                 ]
               : [],
         ),
@@ -75,13 +77,41 @@ class ReceiptDetailScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 10),
               width: double.infinity,
               child: Text(
-                '    description',
+                username,
                 textAlign: TextAlign.center,
                 softWrap: true,
               ),
             ),
             (complete || refund)
-                ? Container()
+                ? isManager
+                    ? ElevatedButton(
+                        child: Text('환불 고'),
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+                          final cancel =
+                              Provider.of<Cancel>(context, listen: false);
+                          cancel.reFund(merchantUid, productId, total);
+
+                          await FirebaseFirestore.instance //메시지 생성
+                              .collection('items')
+                              .doc(productId)
+                              .get()
+                              .then((value) async {
+                            await FirebaseFirestore.instance //메시지 생성
+                                .collection('items')
+                                .doc(productId)
+                                .update({
+                              'amount': value.data()?['amount'] + selectedAmount
+                            });
+                          });
+
+                          await FirebaseFirestore.instance //메시지 생성
+                              .collection('receipts')
+                              .doc(merchantUid)
+                              .update({'refund': true});
+                        },
+                      )
+                    : Container()
                 : ElevatedButton(
                     child: Text('환불 고'),
                     onPressed: () async {

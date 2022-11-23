@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jajungjin/screen/pages/receipt_detail_screen.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-  static const routeName = '/receipt';
+class AllReceiptScreen extends StatelessWidget {
+  const AllReceiptScreen({super.key});
+  static const routeName = '/all-receipt';
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,8 @@ class ProfileScreen extends StatelessWidget {
                                       'currentUserUid': docs?[index]
                                           ['currentUserUid'],
                                       'complete': docs?[index]['complete'],
-                                      'refund': docs?[index]['refund']
+                                      'refund': docs?[index]['refund'],
+                                      'username': docs?[index]['username'],
                                     });
                               },
                               child: Padding(
@@ -71,8 +72,8 @@ class ProfileScreen extends StatelessWidget {
                                       style: const TextStyle(fontSize: 15),
                                     ),
                                   ),
-                                  trailing: Column(
-                                    children: [
+                                  trailing: Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [Text('${docs?[index]['username']}'),
                                       Text(
                                         docs?[index]['refund']
                                             ? '환불 완료 ${DateFormat.Hm().format((docs?[index]['createdAt']).toDate())}'

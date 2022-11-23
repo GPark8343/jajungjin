@@ -50,7 +50,8 @@ class _AuthScreenState extends State<AuthScreen> {
           'username': username.toString(),
           'email': email,
           'image_url': url,
-          'uid': authResult.user?.uid
+          'uid': authResult.user?.uid,
+          'isBan':false
         });
       }
     } on PlatformException catch (error) {
@@ -77,7 +78,12 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: AuthForm(_submitAuthForm, _isLoading),
+      body: Padding(
+        padding: const EdgeInsets.only(top:80.0),
+        child:
+            AuthForm(_submitAuthForm, _isLoading),
+         
+      ),
     );
   }
 }

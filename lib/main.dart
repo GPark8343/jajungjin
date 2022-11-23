@@ -1,10 +1,13 @@
 import 'package:jajungjin/providers/cancel.dart';
 import 'package:jajungjin/screen/auth/auth_screen.dart';
+import 'package:jajungjin/screen/pages/all-receipt_screen.dart';
+import 'package:jajungjin/screen/pages/chat_screen.dart';
 import 'package:jajungjin/screen/pages/i_am_port_payment_screen.dart';
 import 'package:jajungjin/screen/pages/item_detail_screen.dart';
 import 'package:jajungjin/screen/pages/list_screen.dart';
 import 'package:jajungjin/screen/pages/plus_item_screen.dart';
 import 'package:jajungjin/screen/pages/receipt_detail_screen.dart';
+import 'package:jajungjin/screen/pages/user_management_screen.dart';
 import 'package:jajungjin/screen/splash_screen.dart';
 import 'package:jajungjin/screen/tab_screen.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +35,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'FlutterChat',
         theme: ThemeData(
-            primarySwatch: Colors.pink,
+            primarySwatch: Colors.lightBlue,
             backgroundColor: Colors.pink,
             accentColor: Colors.deepPurple,
             accentColorBrightness: Brightness.dark,
@@ -61,6 +64,9 @@ class MyApp extends StatelessWidget {
           ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
           ListScreen.routeName: (ctx) => ListScreen(),
           ReceiptDetailScreen.routeName: (ctx) => ReceiptDetailScreen(),
+         UserManagementScreen.routeName: (ctx) => UserManagementScreen(),
+         AllReceiptScreen.routeName: (ctx) => AllReceiptScreen(),
+         ChatScreen.routeName: (ctx) => ChatScreen(),
           // PlaceDetailScreen.routeName: (ctx) => PlaceDetailScreen(),
           // ChatScreen.routeName: (ctx) => ChatScreen(),
           // ChannelAddScreen.routeName: (ctx) => ChannelAddScreen(),
